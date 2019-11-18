@@ -7,29 +7,51 @@
  */
 
 import React from 'react';
-import StudentsList from './components/container/ViewStudentList';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux';
-import { Text } from 'react-native';
-import usersApp from './redux2/reducers';
-import {addUser, addPost, editPost, readPost} from './redux2/actions';
-import md5 from "md5";
+import rootReducer from './redux3/reducers';
+import { Provider } from 'react-redux';
+import CountriesList from './components/container/countries';
+import {storeCreator} from './redux3/store';
 
-const store = createStore(usersApp);
-console.log(store.getState());
-
-const unsubscribe = store.subscribe(() => console.log(store.getState()));
-store.dispatch(addUser('David','Ristov','david@example.com','davidjpg'));
-store.dispatch(addPost('post 1','text 1',md5('david@example.com')));
-store.dispatch(editPost(md5('post 1',), 'text 2'));
-store.dispatch(readPost(md5('david@example.com'), md5('post 1')));
-unsubscribe();
 
 const App: () => React$Node = () => {
   return (
-      <Text>
-          asd
-      </Text>
+        <Provider store={storeCreator(rootReducer)}>
+            <CountriesList/>
+        </Provider>
+      /*
+      *  5 inputs
+      *     firstName
+      *     lastname
+      *     avatar
+      *     email
+      *     password
+      *     firebase.auth().createUserWithEmailAndPassword(email, password)
+      *         .then((userCredential) => {
+      *             firebase.firestore().collection('users')
+      *                 .doc(userCredential.uid)
+      *                 .set({
+      *                     firstName: firstName,
+      *                     lastName: lastName,
+      *                 .....
+      * }).then(this.props.navigation.navigate("CHAT_SCREEN")
+      *         })
+      *         .catch(error => alert())
+      * */
+      /*
+            email
+            password
+
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    firebase.firestore().collection('users').doc(userCredential.uid)
+                        .get()
+                        .then((snapshot) => {
+                            const data = snapshot.data()
+                        })
+                })
+                .catch(error => alert())
+
+       */
   )
 };
 

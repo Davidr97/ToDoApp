@@ -1,0 +1,5 @@
+
+export const actions = {
+    REQUEST_COUNTRIES: "REQUEST_COUNTRIES",
+    RECEIVE_COUNTRIES: "RECEIVE_COUNTRIES"
+};
